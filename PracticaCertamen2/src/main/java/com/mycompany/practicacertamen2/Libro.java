@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Libro {
     private Libro libro;
     private ArrayList <Libro> libros = new ArrayList();
-    private ArrayList <LibroTexto> librotexto = new ArrayList();
     private ArrayList <TextoPUCV> textosPUCV = new ArrayList();
     private ArrayList <Novelas> novelas = new ArrayList();
     private String autor;
@@ -63,6 +62,7 @@ public class Libro {
         this.titulo = titulo;
     }
     
+
     
     public void mostrarMenu(){
         int opcion , idLibro;
@@ -85,6 +85,16 @@ public class Libro {
                     System.out.println("Ingrese la id del libro del cual desea ver la respectiva informacion:");
                     idLibro = input.nextInt();
                     libro.imprimirLibro(idLibro);
+                    break;
+                case 3:
+                    System.out.println("Ingrese la id del libro que desee eliminar:");
+                    idLibro = input.nextInt();
+                    libro.eliminarLibro(idLibro);
+                    break;
+                case 4:
+                    System.out.println("Ingrese la id del libro que desee cambiar su informacion:");
+                    idLibro = input.nextInt();
+                    libro.actualizarLibro(idLibro);
                     break;
             }
             
@@ -117,7 +127,40 @@ public class Libro {
         System.out.println("ID");
         id= input.nextInt();
         System.out.println("Título");
-        titulo= input.next();
+        titulo= input.next(); //Actualmente esta agregando unicamente la primera palabra que encuentra.
         libros.add(new Libro(autor , precio , id , titulo));
+    }
+    
+    public void  eliminarLibro(int idLibro){
+        int i , id;
+        Scanner input = new Scanner(System.in);
+        for(i = 0  ; i < libros.size() ; i++){
+            if(libros.get(i).getId() == idLibro){
+                libros.remove(i);
+            }
+        }
+    }
+    
+    public void actualizarLibro(int idLibro){
+        Scanner input = new Scanner(System.in);
+        String autor , titulo;
+        int precio , id , i;
+        for(i = 0 ; i < libros.size() ; i++){
+            if(idLibro == libros.get(i).getId()){
+                System.out.println("Por favor, ingrese los nuevos datos para actualizar la informacion del libro");
+                System.out.println("Autor");
+                autor = input.nextLine();
+                libros.get(i).setAutor(autor);
+                System.out.println("Precio");
+                precio= input.nextInt();
+                libros.get(i).setPrecio(precio);
+                System.out.println("ID");
+                id= input.nextInt();
+                libros.get(i).setId(precio);
+                System.out.println("Título");
+                titulo= input.next();
+                libros.get(i).setTitulo(titulo);
+            }
+        }
     }
 }
